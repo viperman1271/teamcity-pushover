@@ -22,6 +22,7 @@ if(UNIX)
     find_package(CURL REQUIRED)
     find_package(yaml-cpp CONFIG REQUIRED)
     find_package(json-c CONFIG REQUIRED)
+    find_package(tinyxml2 CONFIG REQUIRED)
     
     target_link_libraries(teamcity-pushover PRIVATE ${CURL_LIBRARIES} yaml-cpp json-c::json-c)
     target_include_directories(teamcity-pushover PRIVATE ${CURL_INCLUDE_DIRS})

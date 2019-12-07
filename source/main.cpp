@@ -177,7 +177,7 @@ int yaml_read(Configuration& config)
 
     for (std::size_t i = 0; i < node.size(); i++) 
     {
-        YAML::Node& entry = node[i];
+        const YAML::Node& entry = node[i];
         std::string name = entry["string"].as<std::string>();
         std::string id = entry["id"].as<std::string>();
 
