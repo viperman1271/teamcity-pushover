@@ -348,7 +348,7 @@ int scrub_port_from_url(std::string& web_url)
 int main(int argc, char** argv)
 {
     std::string source;
-    bool verbose;
+    bool verbose = false;
     int rc = cli_config(argc, argv, source, verbose);
     if (rc != 0)
     {
