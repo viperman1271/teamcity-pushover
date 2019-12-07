@@ -5,6 +5,8 @@ add_executable(teamcity-pushover source/main.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 
+set(CMAKE_CXX_STANDARD 11)
+
 if(WIN32)
     add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS -DPLATFORM_WINDOWS)
 endif()
