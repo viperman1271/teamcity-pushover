@@ -13,6 +13,7 @@ endif()
 
 if(UNIX)
     include(~/vcpkg/scripts/buildsystems/vcpkg.cmake)
+    #include(~/vcpkg/packages/yaml-cpp_x64-linux/share/yaml-cpp/yaml-cpp-config.cmake)
     
     add_definitions(-DPLATFORM_UNIX)
     
@@ -24,6 +25,6 @@ if(UNIX)
     find_package(json-c CONFIG REQUIRED)
     find_package(tinyxml2 CONFIG REQUIRED)
     
-    target_link_libraries(teamcity-pushover PRIVATE ${CURL_LIBRARIES} yaml-cpp json-c::json-c)
+    target_link_libraries(teamcity-pushover PRIVATE ${CURL_LIBRARIES} yaml-cpp json-c::json-c tinyxml2::tinyxml2)
     target_include_directories(teamcity-pushover PRIVATE ${CURL_INCLUDE_DIRS})
 endif()
