@@ -14,13 +14,13 @@ if(UNIX)
     
     add_definitions(-DPLATFORM_UNIX)
     
-    set_property(TARGET service-checker PROPERTY CXX_STANDARD 11)
+    set_property(TARGET teamcity-pushover PROPERTY CXX_STANDARD 11)
     
     find_package(CLI11 CONFIG REQUIRED)
     find_package(CURL REQUIRED)
     find_package(yaml-cpp CONFIG REQUIRED)
     find_package(json-c CONFIG REQUIRED)
     
-    target_link_libraries(teamcity-pushover PRIVATE ${CURL_LIBRARIES} yaml-cpp json-c::json-c))
+    target_link_libraries(teamcity-pushover PRIVATE ${CURL_LIBRARIES} yaml-cpp json-c::json-c)
     target_include_directories(teamcity-pushover PRIVATE ${CURL_INCLUDE_DIRS})
 endif()
