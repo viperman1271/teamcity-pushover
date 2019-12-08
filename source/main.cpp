@@ -47,7 +47,7 @@ void cleanup_conn(CURL*& conn)
     conn = nullptr;
 }
 
-bool curl_init(CURL*& conn, const std::string& url, std::string& buffer, const std::string& auth_token = {})
+bool curl_init(CURL*& conn, const std::string& url, std::string& buffer, const std::vector<std::string>& http_headers)
 {
     CURLcode code;
 
@@ -96,22 +96,25 @@ bool curl_init(CURL*& conn, const std::string& url, std::string& buffer, const s
         return false;
     }
 
-    if(!auth_token.empty())
+    for (const std::string& http_header : http_headers)
     {
-        struct curl_slist* chunk = nullptr;
-        std::stringstream ss;
-        ss << "Authorization: Bearer " << auth_token;
-        chunk = curl_slist_append(chunk, ss.str().c_str());
+        struct curl_slist* chunk = curl_slist_append(nullptr, http_header.c_str());;
 
         code = curl_easy_setopt(conn, CURLOPT_HTTPHEADER, chunk);
         if (code != CURLE_OK)
         {
-            std::cerr << "Failed to set http error [" << errorBuffer << "]" << std::endl;
+            std::cerr << "Failed to set http header (" << http_header << ") - [" << errorBuffer << "]" << std::endl;
             return false;
         }
     }
 
     return true;
+}
+
+bool curl_init(CURL*& conn, const std::string& url, std::string& buffer)
+{
+    std::vector<std::string> http_headers;
+    return curl_init(conn, url, buffer, http_headers);
 }
 
 bool fetch_data(CURL* conn, const std::string& url, std::string& buffer)
@@ -365,7 +368,14 @@ int main(int argc, char** argv)
     CURL* conn = nullptr;
     std::string buffer;
 
-    if (!curl_init(conn, config.build_url, buffer, config.auth_token))
+    std::vector<std::string> http_headers;
+    
+    std::stringstream ss;
+    ss << "Authorization: Bearer " << config.auth_token;
+
+    http_headers.push_back(ss.str());
+
+    if (!curl_init(conn, config.build_url, buffer, http_headers))
     {
         std::cerr << "Connection initialization failed" << std::endl;
         return EXIT_FAILURE;
