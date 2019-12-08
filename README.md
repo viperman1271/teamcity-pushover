@@ -24,4 +24,4 @@ This produces the teamcity-pushover executable which is then usable.
 Currently Windows and Linux are supported. Any additional UNIX based systems should work (*BSD, Mac, etc.)
 
 # References
-* [cpushover](https://github.com/cbjartli/cpushover) - A source of inspiration for 
+* [cpushover](https://github.com/cbjartli/cpushover) - A source of inspiration
