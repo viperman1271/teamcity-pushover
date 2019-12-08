@@ -16,6 +16,8 @@ enum class BuildStatus
     STATUS_FAILURE
 };
 
+#define YAML_ERR_FILE_NOT_EXIST -1
+#define YAML_CONFIG_FILENAME "config.yaml"
 struct Configuration
 {
     std::string auth_token;
@@ -171,7 +173,15 @@ int cli_config(int argc, char** argv, std::string& source, bool& verbose)
 
 int yaml_read(Configuration& config)
 {
-    YAML::Node config_node = YAML::LoadFile("config.yaml");
+    {
+        std::ifstream f(YAML_CONFIG_FILENAME);
+        if (!f.good())
+        {
+            return YAML_ERR_FILE_NOT_EXIST;
+        }
+    }
+
+    YAML::Node config_node = YAML::LoadFile(YAML_CONFIG_FILENAME);
 
     config.auth_token = config_node["auth_token"].as<std::string>();
     config.build_url = config_node["build_url"].as<std::string>();
@@ -360,6 +370,20 @@ int main(int argc, char** argv)
 
     Configuration config;
     rc = yaml_read(config);
+    if (rc != 0)
+    {
+        switch (rc)
+        {
+        case YAML_ERR_FILE_NOT_EXIST:
+            std::cout << "config.yaml does not exist." << std::endl;
+            break;
+
+        default:
+            std::cout << "Unknown error while reading the config.yaml. Aborting..." << std::endl;
+            break;
+        }
+        return EXIT_FAILURE;
+    }
 
     std::string build_name;
     int build_num;
