@@ -1,4 +1,4 @@
-# TeamCity-Pushover
+# TeamCity-Pushover [![Build Status](https://teamcity.mikefilion.com/app/rest/builds/buildType:(id:Root_Code_TeamcityPushoverGit)/statusIcon)]
 This is an executable that will allow for parsing TeamCity information to push notifications through the Poushover servrice
 
 ## Information
