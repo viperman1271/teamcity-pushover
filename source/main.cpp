@@ -422,6 +422,12 @@ int main(int argc, char** argv)
         }
     }
 
+    if (build_id.empty())
+    {
+        std::cout << "Could not determine the build id for \"" << source << "\"... aborting." << std::endl;
+        return 0;
+    }
+
     BuildStatus build_status;
     std::string web_url;
     rc = find_build_info(buffer, build_id, build_num, build_status, web_url);
