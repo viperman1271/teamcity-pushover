@@ -1,7 +1,7 @@
 #include <curl/curl.h>
 #include <CLI/CLI.hpp>
 #include <tinyxml2.h>
-#include <yaml-cpp/yaml.h>
+#include "yaml-cpp.h"
 #include <json-c/json.h>
 
 #include <sstream>
